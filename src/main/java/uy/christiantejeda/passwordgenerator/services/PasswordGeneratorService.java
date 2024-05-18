@@ -7,13 +7,6 @@ import org.springframework.stereotype.Service;
 @BrowserCallable
 @AnonymousAllowed
 @Service
-public class HelloWorldService {
+public class PasswordGeneratorService {
 
-    public String sayHello(String name) {
-        if (name.isEmpty()) {
-            return "Hello stranger";
-        } else {
-            return "Hello " + name;
-        }
-    }
 }

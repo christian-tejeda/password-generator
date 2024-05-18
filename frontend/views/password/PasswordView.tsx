@@ -6,61 +6,113 @@ import {HorizontalLayout} from "@hilla/react-components/HorizontalLayout";
 import {VerticalLayout} from "@hilla/react-components/VerticalLayout";
 import {IntegerField} from "@hilla/react-components/IntegerField";
 import {PasswordQuality} from "Frontend/util/enums";
+import {PasswordField} from "@hilla/react-components/PasswordField";
+import {Tooltip} from "@hilla/react-components/Tooltip";
+import {Checkbox} from "@hilla/react-components/Checkbox";
+import {CheckboxGroup} from "@hilla/react-components/CheckboxGroup";
 import {useState} from "react";
 
-export default function PasswordView() {
 
-    let passwordQuality: PasswordQuality;
-    let entropy: number;
+export default function PasswordView() {
+    const [characterGroups, setCharacterGroups] = useState(["lowercase", "uppercase", "numbers"])
+    const [passwordLength, setPasswordLength] = useState("10");
 
     return (
         <>
             <section>
-                <VerticalLayout theme="spacing padding margin">
+                <VerticalLayout
+                    className={"border items-stretch w-auto"}
+                    theme="spacing padding margin"
+                >
                     <HorizontalLayout theme="spacing">
-                        <TextField placeholder="Password goes here..."/>
+                        <PasswordField placeholder="Password goes here..." className={"w-full"}/>
                         <Button theme="icon">
-                            <Icon icon="lumo:reload" slot="prefix"/>
-                            Regenerate
+                            <Icon icon="lumo:clock" slot="prefix"/>
+                            <Tooltip
+                                slot="tooltip"
+                                text="Generate password"
+                            />
+                            Generate
                         </Button>
                         <Button theme="icon">
                             <Icon icon="vaadin:clipboard-text" slot="prefix"/>
-                            Copy to clipboard
+                            <Tooltip
+                                slot="tooltip"
+                                text="Copy password to clipboard"
+                            />
+                            Copy to Clipboard
                         </Button>
                     </HorizontalLayout>
-                    <p>Password quality: </p>
-                    <p>Entropy: </p>
+                    <p className={"text-tertiary"}>
+                        Password quality:
+                        <br/>
+                        Entropy:
+                    </p>
+                    <hr/>
                     <HorizontalLayout
                         theme="spacing"
-                        style={{alignItems: 'baseline'}}
+                        className={"items-baseline"}
                     >
                         <IntegerField
                             label="Password length"
                             min={0}
-                            value="10"
+                            value={passwordLength}
+                            onValueChanged={(event) => {setPasswordLength(event.detail.value)}}
                             stepButtonsVisible
                             helperText="Choose an appropiate password length"
+                            style={{width: '8em'}}
                         />
-                        <Button>Advanced Mode</Button>
+                        <Button>
+                            <Tooltip
+                                slot="tooltip"
+                                text="Show advanced options"
+                            />
+                            Advanced
+                        </Button>
                         {/*    Falta implementar las opciones avanzadas
                            recordar que estas opciones tienen un tooltip
                     */}
                     </HorizontalLayout>
-                    <span className="text-xl font-bold">
-                        Character types
-                    </span>
-                    <HorizontalLayout
-                        theme="spacing"
-                        style={{alignItems: 'baseline'}}
-                    >
-                        <Button>a-z</Button>
-                        <Button>A-Z</Button>
-                        <Button>0-9</Button>
-                        <Button>/ * - &</Button>
-                        <Button>Extended ASCII</Button>
+                    <hr/>
+                    <HorizontalLayout theme="spacing">
+                        <CheckboxGroup
+                            label="Character types"
+                            value={characterGroups}
+                            onValueChanged={(event) => setCharacterGroups(event.detail.value)}
+                        >
+                            <Checkbox label="a-z" value="lowercase">
+                                <Tooltip
+                                    slot="tooltip"
+                                    text="Lowercase characters"
+                                />
+                            </Checkbox>
+                            <Checkbox label="A-Z" value="uppercase">
+                                <Tooltip
+                                    slot="tooltip"
+                                    text="Uppercase characters"
+                                />
+                            </Checkbox>
+                            <Checkbox label="0-9" value="numbers">
+                                <Tooltip
+                                    slot="tooltip"
+                                    text="Numbers"
+                                />
+                            </Checkbox>
+                            <Checkbox label="/ * - &" value="special">
+                                <Tooltip
+                                    slot="tooltip"
+                                    text="Special characters"
+                                />
+                            </Checkbox>
+                            <Checkbox label="Extended ASCII" value="extended">
+                                <Tooltip
+                                    slot="tooltip"
+                                    text="Extended ASCII characters"
+                                />
+                            </Checkbox>
+                        </CheckboxGroup>
                     </HorizontalLayout>
                 </VerticalLayout>
-
             </section>
         </>
     )
