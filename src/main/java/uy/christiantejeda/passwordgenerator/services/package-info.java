@@ -1,4 +1,4 @@
 @NonNullApi
-package com.example.application.services;
+package uy.christiantejeda.passwordgenerator.services;
 
 import org.springframework.lang.NonNullApi;

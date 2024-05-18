@@ -1,4 +1,4 @@
-package com.example.application.services;
+package uy.christiantejeda.passwordgenerator.services;
 
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.BrowserCallable;
